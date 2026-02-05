@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Junubie ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@500&display=swap" rel="stylesheet">
+    <style>
+        /* --- CSS STYLES --- */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(117deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            font-family: 'Quicksand', sans-serif;
+            overflow: hidden; 
+            position: relative;
+        }
+
+        /* Floating Hearts Animation */
+        .heart-bg {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.5);
+            animation: float 6s linear infinite;
+            z-index: 0;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(0.5); opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+
+        /* The Box Container */
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            z-index: 10;
+            max-width: 90%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative; /* Container stays relative */
+        }
+
+        h1 {
+            font-family: 'Pacifico', cursive;
+            color: #ff4d6d;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            z-index: 10; /* Text stays above background */
+        }
+
+        .gif-container img {
+            max-width: 250px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+            width: 100%;
+            position: relative; /* Allows stacking context */
+        }
+
+        button {
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        /* YES Button - Layer 1 */
+        #yesBtn {
+            background-color: #ff4d6d;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
+            z-index: 1; /* Low Z-Index so No button is always above it */
+            position: relative;
+        }
+
+        /* NO Button - Layer 9999 (Always on top) */
+        #noBtn {
+            background-color: #e0e0e0;
+            color: #555;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            z-index: 9999; /* This ensures it NEVER hides behind Yes */
+            position: relative; /* Starts relative, becomes fixed on hover */
+        }
+
+        /* Start Screen Overlay */
+        #start-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(117deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000; /* Highest layer of all */
+            flex-direction: column;
+            color: #ff4d6d;
+        }
+
+        #start-screen h1 {
+            color: white;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        #startBtn {
+            padding: 15px 40px;
+            font-size: 1.3rem;
+            background: white;
+            color: #ff4d6d;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        #startBtn:hover {
+            transform: scale(1.05);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="start-screen">
+        <h1>Hi Junubie! ❤️</h1>
+        <p style="color: white; font-size: 1.2rem; margin-bottom: 20px;">I have a question for you...</p>
+        <button id="startBtn">Click to Start</button>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="song.mp3" type="audio/mpeg">
+        <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="container hidden" id="mainContent">
+        <div class="gif-container" id="gifContainer">
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMDJjZDI4YmU2YjE5ZGI5MzI5ODliYmI4NTg5ODQ2MDQ2ZDAwNGE4ZCZjdD1n/cLS1cfxvGOPVpf9g3y/giphy.gif" alt="Cute Bear">
+        </div>
+        
+        <h1 id="question">Will you be my Valentine, Junubie?</h1>
+        
+        <div class="buttons">
+            <button id="yesBtn">YES! 😍</button>
+            <button id="noBtn">No 😢</button>
+        </div>
+    </div>
+
+    <script>
+        const startScreen = document.getElementById('start-screen');
+        const mainContent = document.getElementById('mainContent');
+        const music = document.getElementById('bgMusic');
+        const startBtn = document.getElementById('startBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const question = document.getElementById('question');
+        const gifContainer = document.getElementById('gifContainer');
+
+        let yesScale = 1;
+
+        // 1. Start Button Logic
+        startBtn.addEventListener('click', () => {
+            startScreen.classList.add('hidden');
+            mainContent.classList.remove('hidden');
+            music.volume = 0.5;
+            music.play().catch(e => console.log("Audio requires interaction first"));
+        });
+
+        // 2. "No" Button Logic
+        function moveButton() {
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+            
+            const btnWidth = noBtn.offsetWidth;
+            const btnHeight = noBtn.offsetHeight;
+
+            // Safe boundaries
+            const maxX = windowWidth - btnWidth - 20;
+            const maxY = windowHeight - btnHeight - 20;
+
+            const randomX = Math.max(20, Math.random() * maxX);
+            const randomY = Math.max(20, Math.random() * maxY);
+
+            // Apply fixed position
+            noBtn.style.position = 'fixed'; 
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+
+            // Make "Yes" button bigger
+            yesScale += 0.4;
+            yesBtn.style.transform = `scale(${yesScale})`;
+        }
+
+        noBtn.addEventListener('mouseover', moveButton);
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            moveButton();
+        });
+
+        // 3. "Yes" Button Logic
+        yesBtn.addEventListener('click', () => {
+            question.innerHTML = "Yay! See you on the 14th! ❤️";
+            
+            // Hide buttons and remove No button
+            document.querySelector('.buttons').style.display = 'none';
+            noBtn.remove(); // Removes it from the page completely
+
+            // Celebration GIF
+            gifContainer.innerHTML = '<img src="https://media.giphy.com/media/T86i6yDyOYz7J6dPhf/giphy.gif" alt="Happy Hug">';
+            
+            // Reset Yes button style (visual only, since it's hidden/container gone)
+            yesBtn.style.transform = 'scale(1)';
+            
+            // Intensify hearts
+            setInterval(createFloatingHearts, 100);
+        });
+
+        // 4. Floating Hearts
+        function createFloatingHearts() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤️';
+            heart.classList.add('heart-bg');
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 2 + 's'; 
+            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }
+
+        setInterval(createFloatingHearts, 300);
+
+    </script>
+</body>
+</html>
